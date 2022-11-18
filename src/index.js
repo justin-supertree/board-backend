@@ -2,6 +2,8 @@ import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
 import bodyParser from "body-parser";
+import cors from "cors";
+import mongoose from "mongoose";
 
 import helloRouter from "./routes/hello";
 
@@ -13,6 +15,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(morgan("dev"));
+app.use(cors());
+
+require("dotenv").config();
+
+mongoose.connect("mongodb://localhost:27017/board", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+db.on("error", console.error);
+db.once("open", () =>
+  console.log(`Connected to mongo server: ${process.env.PORT}`)
+);
 
 // router setting
 app.use(
