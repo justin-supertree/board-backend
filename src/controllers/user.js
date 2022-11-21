@@ -1,14 +1,22 @@
 import User from "../models/user";
+import { createHashedPassword } from "../lib/auth";
 
 export const joinUser = async (req, res) => {
   try {
     const { email, password, name, age } = req.body;
 
-    console.log(email, password, name, age);
+    const checkEmail = await User.findOne({
+      email,
+    });
+
+    if (checkEmail) throw new Error("email already exist!");
+
+    const { hashedPassword, salt } = await createHashedPassword(password);
+
     const data = new User({
       email,
-      password,
-      salt: "123",
+      password: hashedPassword,
+      salt,
       name,
       age,
     });

@@ -30,13 +30,6 @@ db.once("open", () =>
   console.log(`Connected to mongo server: ${process.env.PORT}`)
 );
 
-// router setting
-// app.use(
-//   "/user",
-//   //   res.status(500).json({ data: "Hello World!" });
-//   //   res.send({ data: "Hello world! 2" });
-//   userRouter
-// );
 app.use("/user", userRouter); // [Post] user join
 
 // MVC => Model, View, Controller
