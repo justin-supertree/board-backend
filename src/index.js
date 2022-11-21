@@ -17,6 +17,8 @@ app.use(helmet());
 app.use(morgan("dev"));
 app.use(cors());
 
+app.use("/user", userRouter); // [Post] user join
+
 require("dotenv").config();
 
 mongoose.connect("mongodb://localhost:27017/board", {
