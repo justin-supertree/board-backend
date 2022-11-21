@@ -1,7 +1,20 @@
 import User from "../models/user";
 
-export default joinUser = async (req, res) => {
+export const joinUser = async (req, res) => {
   try {
+    const { email, password, name, age } = req.body;
+
+    console.log(email, password, name, age);
+    const data = new User({
+      email,
+      password,
+      salt: "123",
+      name,
+      age,
+    });
+
+    await data.save(); // User Schema Insert
+
     res.send({
       success: true,
       message: null,
@@ -9,7 +22,7 @@ export default joinUser = async (req, res) => {
     });
   } catch (e) {
     res.send({
-      success: true,
+      success: false,
       message: e.message,
       data: "join user",
     });

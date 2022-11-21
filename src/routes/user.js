@@ -3,6 +3,6 @@ import { joinUser } from "../controllers/user";
 
 const router = express.Router();
 
-router.post("join", joinUser);
+router.post("/join", joinUser);
 
-export default route;
+export default router;

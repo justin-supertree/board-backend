@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
 
-import helloRouter from "./routes/hello";
+import userRouter from "./routes/user";
 
 // express 기본 객체 생성
 const app = express();
@@ -16,8 +16,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(cors());
-
-app.use("/user", userRouter); // [Post] user join
 
 require("dotenv").config();
 
@@ -33,12 +31,13 @@ db.once("open", () =>
 );
 
 // router setting
-app.use(
-  "/",
-  //   res.status(500).json({ data: "Hello World!" });
-  //   res.send({ data: "Hello world! 2" });
-  helloRouter
-);
+// app.use(
+//   "/user",
+//   //   res.status(500).json({ data: "Hello World!" });
+//   //   res.send({ data: "Hello world! 2" });
+//   userRouter
+// );
+app.use("/user", userRouter); // [Post] user join
 
 // MVC => Model, View, Controller
 // Modal(DB Schema), Router, Controller
