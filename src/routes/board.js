@@ -4,7 +4,7 @@ import { loginCheck } from "../middlewares/auth";
 
 const router = express.Router();
 
+router.use("/", loginCheck);
 router.post("/", postBoard);
-router.post("/", loginCheck);
 
 export default router;

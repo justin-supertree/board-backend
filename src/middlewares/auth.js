@@ -20,7 +20,9 @@ export const loginCheck = async (req, res, next) => {
     if (today > exp) throw new Error("access token has expired");
 
     // Token 안의 이메일 정보를 사용해 User에서 정보 찾아옴
-    res.locals.user = await User.findOne({ email: decoded.email });
+    const user = await User.findOne({ email: decoded.email });
+    console.log("user >", user);
+    res.locals.user = user;
     // next 파라미터는 다음을 실행하라고 명형하는 것으로, 미들웨어에서 사용됨
     // 하단의 next()가 진행되면 controller로 이동하게 됨
     next();
