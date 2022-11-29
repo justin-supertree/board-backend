@@ -6,6 +6,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 
 import userRouter from "./routes/user";
+import boardRouter from "./routes/board";
 
 // express 기본 객체 생성
 const app = express();
@@ -31,6 +32,7 @@ db.once("open", () =>
 );
 
 app.use("/user", userRouter); // [Post] user join
+app.use("/board", boardRouter);
 
 // MVC => Model, View, Controller
 // Modal(DB Schema), Router, Controller
