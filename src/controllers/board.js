@@ -78,3 +78,30 @@ export const getBoard = async (req, res) => {
     });
   }
 };
+
+export const deleteBoard = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const { user } = res.locals;
+
+    const findBoard = await Board.findById({ _id: id });
+    if (!findBoard) throw new Error("Board is not found!");
+
+    if (user._id.toString() !== findBoard.userId.toString())
+      throw new Error("Invaild User!");
+
+    await Board.findByIdAndDelete({ _id: id });
+
+    res.send({
+      success: true,
+      message: null,
+      data: null,
+    });
+  } catch (e) {
+    res.send({
+      success: false,
+      message: e.message,
+      data: null,
+    });
+  }
+};
