@@ -1,4 +1,4 @@
-import { Jwt } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { createHashedPassword, verifyPassword } from "../lib/auth";
 
 import User from "../models/user";

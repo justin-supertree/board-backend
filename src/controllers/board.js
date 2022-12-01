@@ -28,3 +28,53 @@ export const postBoard = async (req, res) => {
     });
   }
 };
+
+export const getBoardList = async (req, res) => {
+  try {
+    const { page, limit } = req.body;
+
+    const data = await Board.find()
+      .sort({ create_at: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    res.send({
+      success: true,
+      message: null,
+      data,
+    });
+  } catch (e) {
+    res.send({
+      success: false,
+      message: e.message,
+      data: null,
+    });
+  }
+};
+
+export const getBoard = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { user } = res.locals;
+
+    const data = await Board.findById({ _id: id });
+    const isMyBoard = user._id.toString() === data.userId.toString();
+
+    console.log("isMyBoard > ", isMyBoard);
+
+    res.send({
+      success: true,
+      message: null,
+      data: {
+        ...data._doc,
+        isMyBoard,
+      },
+    });
+  } catch (e) {
+    res.send({
+      success: false,
+      message: e.message,
+      data: null,
+    });
+  }
+};
